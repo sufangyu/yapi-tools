@@ -1,0 +1,32 @@
+{
+  "name": "yapi-tools",
+  "description": "YAPI 浏览器插件，在 YAPI 接口文档显示 TypeScript interface。",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "wxt",
+    "dev:firefox": "wxt -b firefox",
+    "build": "wxt build",
+    "build:firefox": "wxt build -b firefox",
+    "zip": "wxt zip",
+    "zip:firefox": "wxt zip -b firefox",
+    "compile": "vue-tsc --noEmit",
+    "postinstall": "wxt prepare"
+  },
+  "dependencies": {
+    "@mswjs/interceptors": "^0.35.8",
+    "lit": "^3.2.0",
+    "prismjs": "^1.29.0",
+    "raw-to-ts": "^0.1.4",
+    "reflect-metadata": "^0.2.2",
+    "vue": "^3.4.34"
+  },
+  "devDependencies": {
+    "@types/prismjs": "^1.26.4",
+    "@wxt-dev/module-vue": "^1.0.0",
+    "typescript": "^5.5.4",
+    "vue-tsc": "^2.0.29",
+    "wxt": "^0.19.1"
+  }
+}
