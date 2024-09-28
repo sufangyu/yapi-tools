@@ -1,7 +1,8 @@
 import { version } from "../package.json";
 
 export default defineContentScript({
-  matches: ["*://*/*"],
+  // matches: ["*://*/*"],
+  matches: ["*://*/project/*/interface/api/*"],
   runAt: "document_end",
   async main() {
     await injectScript("/injected.js", {

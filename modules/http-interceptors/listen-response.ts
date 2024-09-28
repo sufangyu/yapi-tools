@@ -28,8 +28,6 @@ export const listenResponse = async (
       matched && handler(response);
     });
 
-    console.log("listenResponse", path);
-
     interceptor.apply();
   } catch (error) {
     console.error(
