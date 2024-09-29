@@ -13,11 +13,15 @@ export const handlerResponse = (render: (code: InterfaceCode) => void) => {
       // 请求参数转换为接口代码
       const requestTypeCode = isGet
         ? queryToTypeCode(data.req_query)
-        : jsonToTs(requestRaw, { rootName: "Request" })
+        : jsonToTs(requestRaw, {
+            rootName: formatUrlToPascalCase(data.path) + "Req",
+          })
             .reduce((a, b) => `${a}\n\n${b}`)
             .replaceAll(" ?:", "?:");
 
-      const responseTypeCode = jsonToTs(responseRaw, { rootName: "Response" })
+      const responseTypeCode = jsonToTs(responseRaw, {
+        rootName: formatUrlToPascalCase(data.path) + "Res",
+      })
         .reduce((a, b) => `${a}\n\n${b}`)
         .replaceAll(" ?:", "?:");
 
@@ -43,4 +47,25 @@ export const handlerResponse = (render: (code: InterfaceCode) => void) => {
       );
     }
   };
+};
+
+/**
+ * 将 url 格式化为PascalCase命名
+ *
+ * @param {string} url
+ * @return {*}  {string}
+ */
+const formatUrlToPascalCase = (url: string): string => {
+  const parts = url.split("/").filter(Boolean).slice(-2);
+
+  // 如果没有找到任何有效部分，返回空字符串
+  if (parts.length === 0) {
+    return "";
+  }
+
+  // 使用 reduce 方法处理拼接和首字母大写
+  return parts.reduce((acc, part) => {
+    const capitalizedPart = part.charAt(0).toUpperCase() + part.slice(1);
+    return acc + capitalizedPart;
+  }, "");
 };

@@ -20,6 +20,7 @@
     "prismjs": "^1.29.0",
     "raw-to-ts": "^0.1.4",
     "reflect-metadata": "^0.2.2",
+    "rollup-plugin-polyfill-node": "^0.13.0",
     "vue": "^3.4.34"
   },
   "devDependencies": {
