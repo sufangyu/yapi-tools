@@ -29,5 +29,10 @@
     "typescript": "^5.5.4",
     "vue-tsc": "^2.0.29",
     "wxt": "^0.19.1"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "raw-to-ts@0.1.4": "patches/raw-to-ts@0.1.4.patch"
+    }
   }
 }

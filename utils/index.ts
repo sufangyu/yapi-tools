@@ -12,12 +12,15 @@ export const sleep = (duraction: number = 250): Promise<void> => {
  * 将请求参数转换为接口代码
  *
  * @param {Query[]} query 查询参数
+ * @param {string} defaultDesc 命名
  * @param {string} defaultDesc 默认描述
  * @return {*}
  */
 export const queryToTypeCode = (
   query: Query[],
+  rootName: string = "Request",
   defaultDesc: string = "注释"
+
 ): string => {
   const content = query.reduce((code, { required, name, desc }) => {
     const symbol = required === "0" ? "?" : "";
@@ -25,7 +28,7 @@ export const queryToTypeCode = (
       desc || defaultDesc
     } */\n  ${name}${symbol}: string;`;
   }, "");
-  return `export interface Request {${content}\n}`;
+  return `export interface ${rootName} {${content}\n}`;
 };
 
 interface Query {
