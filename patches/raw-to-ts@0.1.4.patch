@@ -8,10 +8,10 @@ diff --git a/.vscode/task.json b/.vscode/task.json
 deleted file mode 100644
 index 0990547d8d845e43d21ec1382c05b1fb622df307..0000000000000000000000000000000000000000
 diff --git a/build/dev/index.js b/build/dev/index.js
-index c2713dcb3834401e3fc0cd3fa4b0ecf5d733656f..c1501cadba520667f74d66efc23f207d2a4d8e6d 100644
+index c2713dcb3834401e3fc0cd3fa4b0ecf5d733656f..4f449df43272d4f951343194add0027d88df62f5 100644
 --- a/build/dev/index.js
 +++ b/build/dev/index.js
-@@ -1,6 +1,18 @@
+@@ -1,6 +1,177 @@
  "use strict";
  Object.defineProperty(exports, "__esModule", { value: true });
  var index_1 = require("../src/index");
@@ -23,36 +23,196 @@ index c2713dcb3834401e3fc0cd3fa4b0ecf5d733656f..c1501cadba520667f74d66efc23f207d
 +// // yapi: 请求参数（https://yapi.textile-story.com/project/1208/interface/api/83694）
 +// const requestScheme = {};
 +// console.log(RawToTs(requestScheme, { rootName: 'PaymentInfoDetailReq' }))
-+// // yapi: 数组类型（https://yapi.textile-story.com/project/1208/interface/api/83689）
-+// const yapiWithArr = {"type":"object","properties":{"successful":{"type":"boolean","description":""},"code":{"type":"string","description":""},"message":{"type":"string","description":""},"data":{"type":"object","properties":{"page":{"type":"integer","description":""},"total":{"type":"integer","description":""},"list":{"type":"array","items":{"type":"object","properties":{"spuId":{"type":"integer","description":"商品id"},"platformType":{"type":"integer","description":"分发平台类型（1：Temu全托管，2：Temu半托管）"},"lastCatId":{"type":"integer","description":"最后一级品类id"},"lastCatName":{"type":"string","description":"最后一级品类"},"mainImgUrl":{"type":"string","description":"主图"},"spuCode":{"type":"string","description":"内部商品编码"},"spuName":{"type":"string","description":"商品名称"},"systemCatCode":{"type":"string","description":"品类"},"floralRelated":{"type":"integer","description":"是否关联版型（0：否，1：是）"},"templated":{"type":"integer","description":"否光板款（0：否，1：是）"},"floralName":{"type":"string","description":"关联版型"},"floralCode":{"type":"string","description":"关联母版"},"templateCode":{"type":"string","description":"关联光板"},"skcList":{"type":"array","items":{"type":"object","properties":{"skcCode":{"type":"string","description":"skc编码"},"color":{"type":"string","description":"skc 色值"}}},"description":"skc"},"unPublishCount":{"type":"integer","description":"未发布数量"},"publishCount":{"type":"integer","description":"已发布数量"},"creatorName":{"type":"string","description":"创建人"},"createdTime":{"type":"string","description":"创建时间","mock":{"mock":"@datetime"}},"spuState":{"type":"integer","description":"商品状态（0：启用，1：禁用）"},"publishState":{"type":"integer","description":"是否发布（0：未发布，1：已发布 ，2：发布中）"},"sourceType":{"type":"integer","description":"任务来源（0：新增 1：光板，2：版型）"},"skuCount":{"type":"integer","description":"sku数量"},"failPublishCount":{"type":"integer","description":"发布失败数量","default":"0"},"publishRecordCount":{"type":"integer","description":"发布记录数量"},"modelName":{"type":"string","description":"模特"}}},"description":""}},"description":""}},"$schema":"http://json-schema.org/draft-04/schema#"}
-+// const interfaceScheme = yapiWithArr.properties.data;
-+// console.log(RawToTs(interfaceScheme, { rootName: 'PaymentInfoDetailRes' }))
++// yapi: 数组类型（https://yapi.textile-story.com/project/1208/interface/api/83689）
++var yapiWithArr = {
++    type: "object",
++    properties: {
++        successful: { type: "boolean", description: "" },
++        code: { type: "string", description: "" },
++        message: { type: "string", description: "" },
++        data: {
++            type: "object",
++            properties: {
++                page: { type: "integer", description: "" },
++                total: { type: "integer", description: "" },
++                list: {
++                    type: "array",
++                    items: {
++                        type: "object",
++                        properties: {
++                            spuId: { type: "integer", description: "商品id" },
++                            platformType: {
++                                type: "integer",
++                                description: "分发平台类型（1：Temu全托管，2：Temu半托管）",
++                            },
++                            navigatepageNums: { type: "array", items: { type: "integer" } },
++                            lastCatId: { type: "integer", description: "最后一级品类id" },
++                            lastCatName: { type: "string", description: "最后一级品类" },
++                            mainImgUrl: { type: "string", description: "主图" },
++                            spuCode: { type: "string", description: "内部商品编码" },
++                            spuName: { type: "string", description: "商品名称" },
++                            systemCatCode: { type: "string", description: "品类" },
++                            floralRelated: {
++                                type: "integer",
++                                description: "是否关联版型（0：否，1：是）",
++                            },
++                            templated: {
++                                type: "integer",
++                                description: "否光板款（0：否，1：是）",
++                            },
++                            floralName: { type: "string", description: "关联版型" },
++                            floralCode: { type: "string", description: "关联母版" },
++                            templateCode: { type: "string", description: "关联光板" },
++                            skcList: {
++                                type: "array",
++                                items: {
++                                    type: "object",
++                                    properties: {
++                                        skcCode: { type: "string", description: "skc编码" },
++                                        color: { type: "string", description: "skc 色值" },
++                                    },
++                                },
++                                description: "skc",
++                            },
++                            unPublishCount: { type: "integer", description: "未发布数量" },
++                            publishCount: { type: "integer", description: "已发布数量" },
++                            creatorName: { type: "string", description: "创建人" },
++                            createdTime: {
++                                type: "string",
++                                description: "创建时间",
++                                mock: { mock: "@datetime" },
++                            },
++                            spuState: {
++                                type: "integer",
++                                description: "商品状态（0：启用，1：禁用）",
++                            },
++                            publishState: {
++                                type: "integer",
++                                description: "是否发布（0：未发布，1：已发布 ，2：发布中）",
++                            },
++                            sourceType: {
++                                type: "integer",
++                                description: "任务来源（0：新增 1：光板，2：版型）",
++                            },
++                            skuCount: { type: "integer", description: "sku数量" },
++                            failPublishCount: {
++                                type: "integer",
++                                description: "发布失败数量",
++                                default: "0",
++                            },
++                            publishRecordCount: {
++                                type: "integer",
++                                description: "发布记录数量",
++                            },
++                            modelName: { type: "string", description: "模特" },
++                        },
++                    },
++                    description: "",
++                },
++            },
++            description: "",
++        },
++    },
++    $schema: "http://json-schema.org/draft-04/schema#",
++};
++var interfaceScheme = yapiWithArr.properties.data;
++console.log(index_1.default(interfaceScheme, { rootName: "PaymentInfoDetailRes" }));
 +// // yapi: 描述文本格式有问题（https://yapi.textile-story.com/project/1208/interface/api/83774）
-+var yapiWithDesc = { "type": "object", "properties": { "successful": { "type": "boolean", "description": "" }, "code": { "type": "string", "description": "" }, "message": { "type": "string", "description": "" }, "data": { "type": "object", "properties": { "paymentStatusCount": { "type": "object", "properties": {}, "description": "支付状态个数，支付状态枚举如下:\\n    ALL(0, \"全部\"),\\n    WAIT_PAY(10, \"待支付\"),\\n    PAYING(20, \"支付中\"),\\n    PAY_SUCCESS(30, \"支付成功\"),\\n    PAY_FAIL(40, \"支付失败\"),\\n    CANCEL(50, \"已取消\")," }, "paymentPage": { "type": "object", "properties": { "page": { "type": "integer", "description": "" }, "total": { "type": "integer", "description": "" }, "list": { "type": "array", "items": { "type": "object", "properties": { "paymentId": { "type": "integer", "description": "支付id" }, "paymentNo": { "type": "string", "description": "支付流水" }, "createdTime": { "type": "string", "description": "支付创建时间", "mock": { "mock": "@datetime" } }, "orderCode": { "type": "string", "description": "订单编号" }, "channel": { "type": "string", "description": "渠道枚举 TIKTOK-抖音 WECHAT-微信" }, "orderAmount": { "type": "number", "description": "订单金额" }, "paymentChannel": { "type": "string", "description": "支付渠道 TIKTOK-抖音 WECHAT-微信" }, "paymentState": { "type": "integer", "description": "支付状态：10-待支付、20-支付中、30-支付成功、40-支付失败、50-已取消" }, "actualPaymentAmount": { "type": "number", "description": "实付金额" }, "paymentTime": { "type": "string", "description": "支付时间", "mock": { "mock": "@datetime" } } } }, "description": "列表描述" } }, "description": "支付单据数据" } }, "description": "" } }, "$schema": "http://json-schema.org/draft-04/schema#", "description": "分页" };
-+var interfaceScheme = yapiWithDesc.properties.data;
-+console.log(index_1.default(interfaceScheme, { rootName: 'PaymentInfoPageRes' }));
++// const yapiWithDesc = {
++//   type: "object",
++//   properties: {
++//     successful: { type: "boolean", description: "" },
++//     code: { type: "string", description: "" },
++//     message: { type: "string", description: "" },
++//     data: {
++//       type: "object",
++//       properties: {
++//         paymentStatusCount: {
++//           type: "object",
++//           properties: {},
++//           description:
++//             '支付状态个数，支付状态枚举如下:\\n    ALL(0, "全部"),\\n    WAIT_PAY(10, "待支付"),\\n    PAYING(20, "支付中"),\\n    PAY_SUCCESS(30, "支付成功"),\\n    PAY_FAIL(40, "支付失败"),\\n    CANCEL(50, "已取消"),',
++//         },
++//         paymentPage: {
++//           type: "object",
++//           properties: {
++//             page: { type: "integer", description: "" },
++//             total: { type: "integer", description: "" },
++//             list: {
++//               type: "array",
++//               items: {
++//                 type: "object",
++//                 properties: {
++//                   paymentId: { type: "integer", description: "支付id" },
++//                   paymentNo: { type: "string", description: "支付流水" },
++//                   createdTime: {
++//                     type: "string",
++//                     description: "支付创建时间",
++//                     mock: { mock: "@datetime" },
++//                   },
++//                   orderCode: { type: "string", description: "订单编号" },
++//                   channel: {
++//                     type: "string",
++//                     description: "渠道枚举 TIKTOK-抖音 WECHAT-微信",
++//                   },
++//                   orderAmount: { type: "number", description: "订单金额" },
++//                   paymentChannel: {
++//                     type: "string",
++//                     description: "支付渠道 TIKTOK-抖音 WECHAT-微信",
++//                   },
++//                   paymentState: {
++//                     type: "integer",
++//                     description:
++//                       "支付状态：10-待支付、20-支付中、30-支付成功、40-支付失败、50-已取消",
++//                   },
++//                   actualPaymentAmount: {
++//                     type: "number",
++//                     description: "实付金额",
++//                   },
++//                   paymentTime: {
++//                     type: "string",
++//                     description: "支付时间",
++//                     mock: { mock: "@datetime" },
++//                   },
++//                 },
++//               },
++//               description: "列表描述",
++//             },
++//           },
++//           description: "支付单据数据",
++//         },
++//       },
++//       description: "",
++//     },
++//   },
++//   $schema: "http://json-schema.org/draft-04/schema#",
++//   description: "分页",
++// };
++// const interfaceScheme = yapiWithDesc.properties.data;
++// console.log(RawToTs(interfaceScheme, { rootName: "PaymentInfoPageRes" }));
  //# sourceMappingURL=index.js.map
 \ No newline at end of file
 diff --git a/build/dev/index.js.map b/build/dev/index.js.map
-index aabead3716573d1ea50e9fdc0a4c68705c99aaa0..f35970893e264cb2cab219b84404d8917c0a34f2 100644
+index aabead3716573d1ea50e9fdc0a4c68705c99aaa0..bdd1fb471b75fae6b6f3c12325f77a584939e3aa 100644
 --- a/build/dev/index.js.map
 +++ b/build/dev/index.js.map
 @@ -1 +1 @@
 -{"version":3,"file":"index.js","sourceRoot":"","sources":["../../dev/index.ts"],"names":[],"mappings":";;AAAA,sCAAkC;AAElC,IAAM,GAAG,GAAG,EAAC,MAAM,EAAC,QAAQ,EAAC,YAAY,EAAC,EAAC,SAAS,EAAC,EAAC,MAAM,EAAC,SAAS,EAAC,QAAQ,EAAC,OAAO,EAAC,aAAa,EAAC,OAAO,EAAC,EAAC,UAAU,EAAC,EAAC,MAAM,EAAC,SAAS,EAAC,EAAC,OAAO,EAAC,EAAC,MAAM,EAAC,SAAS,EAAC,QAAQ,EAAC,OAAO,EAAC,EAAC,SAAS,EAAC,EAAC,MAAM,EAAC,OAAO,EAAC,OAAO,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,YAAY,EAAC,EAAC,YAAY,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,QAAQ,EAAC,WAAW,EAAC,aAAa,EAAC,MAAM,EAAC,EAAC,SAAS,EAAC,EAAC,MAAM,EAAC,SAAS,EAAC,QAAQ,EAAC,OAAO,EAAC,aAAa,EAAC,gBAAgB,EAAC,EAAC,IAAI,EAAC,EAAC,MAAM,EAAC,SAAS,EAAC,QAAQ,EAAC,OAAO,EAAC,EAAC,gBAAgB,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,MAAM,EAAC,EAAC,eAAe,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,SAAS,EAAC,EAAC,UAAU,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,MAAM,EAAC,EAAC,WAAW,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,YAAY,EAAC,EAAC,iBAAiB,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,KAAK,EAAC,EAAC,iBAAiB,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,QAAQ,EAAC,WAAW,EAAC,aAAa,EAAC,MAAM,EAAC,EAAC,YAAY,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,QAAQ,EAAC,WAAW,EAAC,aAAa,EAAC,MAAM,EAAC,EAAC,EAAC,OAAO,EAAC,yBAAyB,EAAC,OAAO,EAAC,uCAAuC,EAAC,UAAU,EAAC,CAAC,SAAS,EAAC,IAAI,EAAC,gBAAgB,EAAC,eAAe,EAAC,UAAU,EAAC,WAAW,EAAC,iBAAiB,EAAC,iBAAiB,EAAC,YAAY,CAAC,EAAC,EAAC,UAAU,EAAC,CAAC,EAAC,UAAU,EAAC,CAAC,EAAC,EAAC,aAAa,EAAC,EAAC,MAAM,EAAC,SAAS,EAAC,EAAC,MAAM,EAAC,EAAC,MAAM,EAAC,SAAS,EAAC,QAAQ,EAAC,OAAO,EAAC,EAAC,OAAO,EAAC,EAAC,MAAM,EAAC,SAAS,EAAC,QAAQ,EAAC,OAAO,EAAC,EAAC,EAAC,OAAO,EAAC,gCAAgC,EAAC,OAAO,EAAC,8CAA8C,EAAC,UAAU,EAAC,CAAC,UAAU,EAAC,OAAO,EAAC,SAAS,EAAC,aAAa,EAAC,MAAM,EAAC,OAAO,CAAC,EAAC,CAAA;AACz3C,OAAO,CAAC,GAAG,CAAC,eAAO,CAAC,GAAG,CAAC,CAAC,CAAA"}
 \ No newline at end of file
-+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../dev/index.ts"],"names":[],"mappings":";;AAAA,sCAAkC;AAElC,QAAQ;AACR,43CAA43C;AAC53C,4BAA4B;AAE5B,iFAAiF;AACjF,4BAA4B;AAC5B,4EAA4E;AAG5E,iFAAiF;AACjF,0hEAA0hE;AAC1hE,uDAAuD;AACvD,8EAA8E;AAE9E,sFAAsF;AACtF,IAAM,YAAY,GAAG,EAAC,MAAM,EAAC,QAAQ,EAAC,YAAY,EAAC,EAAC,YAAY,EAAC,EAAC,MAAM,EAAC,SAAS,EAAC,aAAa,EAAC,EAAE,EAAC,EAAC,MAAM,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,EAAE,EAAC,EAAC,SAAS,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,EAAE,EAAC,EAAC,MAAM,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,YAAY,EAAC,EAAC,oBAAoB,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,YAAY,EAAC,EAAE,EAAC,aAAa,EAAC,0LAA0L,EAAC,EAAC,aAAa,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,YAAY,EAAC,EAAC,MAAM,EAAC,EAAC,MAAM,EAAC,SAAS,EAAC,aAAa,EAAC,EAAE,EAAC,EAAC,OAAO,EAAC,EAAC,MAAM,EAAC,SAAS,EAAC,aAAa,EAAC,EAAE,EAAC,EAAC,MAAM,EAAC,EAAC,MAAM,EAAC,OAAO,EAAC,OAAO,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,YAAY,EAAC,EAAC,WAAW,EAAC,EAAC,MAAM,EAAC,SAAS,EAAC,aAAa,EAAC,MAAM,EAAC,EAAC,WAAW,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,MAAM,EAAC,EAAC,aAAa,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,QAAQ,EAAC,MAAM,EAAC,EAAC,MAAM,EAAC,WAAW,EAAC,EAAC,EAAC,WAAW,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,MAAM,EAAC,EAAC,SAAS,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,0BAA0B,EAAC,EAAC,aAAa,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,MAAM,EAAC,EAAC,gBAAgB,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,0BAA0B,EAAC,EAAC,cAAc,EAAC,EAAC,MAAM,EAAC,SAAS,EAAC,aAAa,EAAC,2CAA2C,EAAC,EAAC,qBAAqB,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,MAAM,EAAC,EAAC,aAAa,EAAC,EAAC,MAAM,EAAC,QAAQ,EAAC,aAAa,EAAC,MAAM,EAAC,MAAM,EAAC,EAAC,MAAM,EAAC,WAAW,EAAC,EAAC,EAAC,EAAC,EAAC,aAAa,EAAC,MAAM,EAAC,EAAC,EAAC,aAAa,EAAC,QAAQ,EAAC,EAAC,EAAC,aAAa,EAAC,EAAE,EAAC,EAAC,EAAC,SAAS,EAAC,yCAAyC,EAAC,aAAa,EAAC,IAAI,EAAC,CAAA;AAC78C,IAAM,eAAe,GAAG,YAAY,CAAC,UAAU,CAAC,IAAI,CAAC;AACrD,OAAO,CAAC,GAAG,CAAC,eAAO,CAAC,eAAe,EAAE,EAAE,QAAQ,EAAE,oBAAoB,EAAE,CAAC,CAAC,CAAA"}
++{"version":3,"file":"index.js","sourceRoot":"","sources":["../../dev/index.ts"],"names":[],"mappings":"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"}
 \ No newline at end of file
 diff --git a/build/src/get-interfaces.d.ts b/build/src/get-interfaces.d.ts
-index e739a57b7b4bb76956b2bac41e05415095da650e..eb065ed8794479c5aec85bd78c005448127daba6 100644
+index e739a57b7b4bb76956b2bac41e05415095da650e..2e9e67747f9cd9b08e3f369ca1b89d77616a272e 100644
 --- a/build/src/get-interfaces.d.ts
 +++ b/build/src/get-interfaces.d.ts
 @@ -1,3 +1,3 @@
  import { InterfaceDescription, NameEntry, TypeStructure } from './model';
 -export declare function getInterfaceStringFromDescription({ name, typeMap }: InterfaceDescription, json: any): string;
+-export declare function getInterfaceDescriptions(typeStructure: TypeStructure, names: NameEntry[]): InterfaceDescription[];
 +export declare function getInterfaceStringFromDescription({ name, typeMap }: InterfaceDescription, json: any, rootName: string): string;
- export declare function getInterfaceDescriptions(typeStructure: TypeStructure, names: NameEntry[]): InterfaceDescription[];
++export declare function getInterfaceDescriptions(typeStructure: TypeStructure, names: NameEntry[], rootName: string): InterfaceDescription[];
 diff --git a/build/src/get-interfaces.js b/build/src/get-interfaces.js
-index bf60993fe33ae776a22e395640f28edb584e1bfa..e16dddcda59d8670f7e0c2ba857175a82e5ef156 100644
+index bf60993fe33ae776a22e395640f28edb584e1bfa..0f0ebb42cf6d243f02b71f9a24f21bb810666000 100644
 --- a/build/src/get-interfaces.js
 +++ b/build/src/get-interfaces.js
 @@ -1,5 +1,6 @@
@@ -62,7 +222,27 @@ index bf60993fe33ae776a22e395640f28edb584e1bfa..e16dddcda59d8670f7e0c2ba857175a8
  var replace_1 = require("./replace");
  var util_1 = require("./util");
  function isKeyNameValid(keyName) {
-@@ -75,7 +76,7 @@ function replaceTypeObjIdsWithNames(typeObj, names) {
+@@ -30,7 +31,7 @@ function removeNullFromUnion(unionTypeName) {
+     typeNames.splice(nullIndex, 1);
+     return typeNames.join(' | ');
+ }
+-function replaceTypeObjIdsWithNames(typeObj, names) {
++function replaceTypeObjIdsWithNames(typeObj, names, rootName) {
+     return (Object.entries(typeObj)
+         // quote key if is invalid and question mark if optional from array merging
+         .map(function (_a) {
+@@ -47,6 +48,10 @@ function replaceTypeObjIdsWithNames(typeObj, names) {
+             return [key, type, isOptional];
+         }
+         var newType = findNameById(type, names);
++        // 修复: 简单类型的数组类型会带前缀, 如: PaymentInfoDetailResnumbrt[]
++        var isSimpleArr = /(number\[\]|string\[\]|boolean\[\])$/.test(newType);
++        var regex = new RegExp("^" + rootName);
++        isSimpleArr && (newType = newType.replace(regex, ''));
+         return [key, newType, isOptional];
+     })
+         // if union has null, remove null and make type optional
+@@ -75,7 +80,7 @@ function replaceTypeObjIdsWithNames(typeObj, names) {
          return agg;
      }, {}));
  }
@@ -71,7 +251,7 @@ index bf60993fe33ae776a22e395640f28edb584e1bfa..e16dddcda59d8670f7e0c2ba857175a8
      var name = _a.name, typeMap = _a.typeMap;
      var stringTypeMap = Object.entries(typeMap)
          .map(function (_a) {
-@@ -84,11 +85,21 @@ function getInterfaceStringFromDescription(_a, json) {
+@@ -84,23 +89,33 @@ function getInterfaceStringFromDescription(_a, json) {
              return "  /** " + replace_1.findDesc(json, typeMap, key, name) + " */\n  " + key + ": " + name + ";\n";
          }
          else {
@@ -95,7 +275,21 @@ index bf60993fe33ae776a22e395640f28edb584e1bfa..e16dddcda59d8670f7e0c2ba857175a8
      interfaceString += stringTypeMap;
      interfaceString += '}';
      return interfaceString;
-@@ -110,4 +121,43 @@ function getInterfaceDescriptions(typeStructure, names) {
+ }
+ exports.getInterfaceStringFromDescription = getInterfaceStringFromDescription;
+-function getInterfaceDescriptions(typeStructure, names) {
++function getInterfaceDescriptions(typeStructure, names, rootName) {
+     return names
+         .map(function (_a) {
+         var id = _a.id, name = _a.name;
+         var typeDescription = util_1.findTypeById(id, typeStructure.types);
+         if (typeDescription.typeObj) {
+-            var typeMap = replaceTypeObjIdsWithNames(typeDescription.typeObj, names);
++            var typeMap = replaceTypeObjIdsWithNames(typeDescription.typeObj, names, rootName);
+             return { name: name, typeMap: typeMap };
+         }
+         else {
+@@ -110,4 +125,43 @@ function getInterfaceDescriptions(typeStructure, names) {
          .filter(function (_) { return _ !== null; });
  }
  exports.getInterfaceDescriptions = getInterfaceDescriptions;
@@ -141,13 +335,13 @@ index bf60993fe33ae776a22e395640f28edb584e1bfa..e16dddcda59d8670f7e0c2ba857175a8
  //# sourceMappingURL=get-interfaces.js.map
 \ No newline at end of file
 diff --git a/build/src/get-interfaces.js.map b/build/src/get-interfaces.js.map
-index c3678a9aa85a1abf9599098761efb21e8e34c9aa..6ffd22e84d1fbe5a5ee3075e6e82cd79947bd24d 100644
+index c3678a9aa85a1abf9599098761efb21e8e34c9aa..6bed2cfc9a5666fd3f3774a04b645a4d5e5c8bf3 100644
 --- a/build/src/get-interfaces.js.map
 +++ b/build/src/get-interfaces.js.map
 @@ -1 +1 @@
 -{"version":3,"file":"get-interfaces.js","sourceRoot":"","sources":["../../src/get-interfaces.ts"],"names":[],"mappings":"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"}
 \ No newline at end of file
-+{"version":3,"file":"get-interfaces.js","sourceRoot":"","sources":["../../src/get-interfaces.ts"],"names":[],"mappings":"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"}
++{"version":3,"file":"get-interfaces.js","sourceRoot":"","sources":["../../src/get-interfaces.ts"],"names":[],"mappings":"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"}
 \ No newline at end of file
 diff --git a/build/src/get-names.js b/build/src/get-names.js
 index d9b532b75e9bd23b0a38e3ed9df3838dac37b65e..87e3694538e55c59050c8c3d539d25d8e6896c13 100644
@@ -204,7 +398,7 @@ index 608759af0e1d2d6b67aa8cc0843eeb81487de5fd..0aa997d18827d5c1db2e948562c73561
 +{"version":3,"file":"get-type-structure.js","sourceRoot":"","sources":["../../src/get-type-structure.ts"],"names":[],"mappings":"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"}
 \ No newline at end of file
 diff --git a/build/src/index.js b/build/src/index.js
-index aaa738b9fd0bbe982d466437b5524724a9acfcdb..ea957cf4f204c4a33b73666c741f629957e62c45 100644
+index aaa738b9fd0bbe982d466437b5524724a9acfcdb..fa2e52279d5d92362a67240fe0be7ae41830813f 100644
 --- a/build/src/index.js
 +++ b/build/src/index.js
 @@ -40,7 +40,14 @@ function RawToTs(json, userOptions) {
@@ -219,18 +413,18 @@ index aaa738b9fd0bbe982d466437b5524724a9acfcdb..ea957cf4f204c4a33b73666c741f6299
 +        }
 +        return it;
 +    });
-+    return get_interfaces_1.getInterfaceDescriptions(typeStructure, names).map(function (item) { return get_interfaces_1.getInterfaceStringFromDescription(item, json, options.rootName); });
++    return get_interfaces_1.getInterfaceDescriptions(typeStructure, names, options.rootName).map(function (item) { return get_interfaces_1.getInterfaceStringFromDescription(item, json, options.rootName); });
  }
  exports.default = RawToTs;
  RawToTs.default = RawToTs;
 diff --git a/build/src/index.js.map b/build/src/index.js.map
-index 75761347051b645ae1e8c068607f0dc183216972..6f45e27d74aa216c411aeda47c46e0c314f89da6 100644
+index 75761347051b645ae1e8c068607f0dc183216972..54fb233cfd2b878187ef3c55730eaffc34bcb069 100644
 --- a/build/src/index.js.map
 +++ b/build/src/index.js.map
 @@ -1 +1 @@
 -{"version":3,"file":"index.js","sourceRoot":"","sources":["../../src/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA,2DAA8E;AAE9E,8CAAwC;AACxC,mDAGyB;AACzB,yCAAsC;AACtC,+BAA0C;AAC1C,qCAAmC;AACnC,eAAI,EAAE,CAAA;AAEN,SAAwB,OAAO,CAAC,IAAS,EAAE,WAAsB;IAC/D,IAAM,cAAc,GAAY;QAC9B,QAAQ,EAAE,SAAS;KACpB,CAAA;IACD,IAAM,OAAO,yBACR,cAAc,GACd,WAAW,CACf,CAAA;IAED;;;OAGG;IACH,IAAM,gBAAgB,GACpB,cAAO,CAAC,IAAI,CAAC;QACb,IAAI,CAAC,MAAM,GAAG,CAAC;QACf,IAAI,CAAC,MAAM,CAAC,UAAC,CAAC,EAAE,CAAC,IAAK,OAAA,CAAC,IAAI,eAAQ,CAAC,CAAC,CAAC,EAAhB,CAAgB,EAAE,IAAI,CAAC,CAAA;IAE/C,IAAI,CAAC,CAAC,eAAQ,CAAC,IAAI,CAAC,IAAI,gBAAgB,CAAC,EAAE;QACzC,MAAM,IAAI,KAAK,CAAC,mDAAmD,CAAC,CAAA;KACrE;IAED,IAAM,aAAa,GAAG,qCAAgB,CAAC,iBAAO,CAAC,IAAI,CAAC,CAAC,CAAA;IACrD;;;OAGG;IACH,0CAAqB,CAAC,aAAa,CAAC,CAAA;IAEpC,IAAM,KAAK,GAAG,oBAAQ,CAAC,aAAa,EAAE,OAAO,CAAC,QAAQ,CAAC,CAAA;IAEvD,OAAO,yCAAwB,CAAC,aAAa,EAAE,KAAK,CAAC,CAAC,GAAG,CAAC,UAAA,IAAI,IAAI,OAAA,kDAAiC,CAAC,IAAI,EAAE,IAAI,CAAC,EAA7C,CAA6C,CAAC,CAAA;AAClH,CAAC;AAhCD,0BAgCC;AAES,OAAQ,CAAC,OAAO,GAAG,OAAO,CAAA;AACpC,MAAM,CAAC,OAAO,GAAG,OAAO,CAAA"}
 \ No newline at end of file
-+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../src/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA,2DAA8E;AAE9E,8CAAwC;AACxC,mDAGyB;AACzB,yCAAsC;AACtC,+BAA0C;AAC1C,qCAAmC;AACnC,eAAI,EAAE,CAAA;AAEN,SAAwB,OAAO,CAAC,IAAS,EAAE,WAAsB;IAC/D,IAAM,cAAc,GAAY;QAC9B,QAAQ,EAAE,SAAS;KACpB,CAAA;IACD,IAAM,OAAO,yBACR,cAAc,GACd,WAAW,CACf,CAAA;IAED;;;OAGG;IACH,IAAM,gBAAgB,GACpB,cAAO,CAAC,IAAI,CAAC;QACb,IAAI,CAAC,MAAM,GAAG,CAAC;QACf,IAAI,CAAC,MAAM,CAAC,UAAC,CAAC,EAAE,CAAC,IAAK,OAAA,CAAC,IAAI,eAAQ,CAAC,CAAC,CAAC,EAAhB,CAAgB,EAAE,IAAI,CAAC,CAAA;IAE/C,IAAI,CAAC,CAAC,eAAQ,CAAC,IAAI,CAAC,IAAI,gBAAgB,CAAC,EAAE;QACzC,MAAM,IAAI,KAAK,CAAC,mDAAmD,CAAC,CAAA;KACrE;IAED,IAAM,aAAa,GAAG,qCAAgB,CAAC,iBAAO,CAAC,IAAI,CAAC,CAAC,CAAA;IACrD;;;OAGG;IACH,0CAAqB,CAAC,aAAa,CAAC,CAAA;IAEpC,IAAM,KAAK,GAAG,oBAAQ,CAAC,aAAa,EAAE,OAAO,CAAC,QAAQ,CAAC,CAAA;IAEvD,2BAA2B;IAC3B,KAAK,CAAC,GAAG,CAAC,UAAC,EAAE;QACX,IAAI,CAAC,EAAE,CAAC,IAAI,CAAC,UAAU,CAAC,OAAO,CAAC,QAAQ,CAAC,EAAE;YACzC,EAAE,CAAC,IAAI,GAAG,KAAG,OAAO,CAAC,QAAQ,GAAG,EAAE,CAAC,IAAM,CAAC;SAC3C;QACD,OAAO,EAAE,CAAC;IACZ,CAAC,CAAC,CAAA;IAEF,OAAO,yCAAwB,CAAC,aAAa,EAAE,KAAK,CAAC,CAAC,GAAG,CAAC,UAAA,IAAI,IAAI,OAAA,kDAAiC,CAAC,IAAI,EAAE,IAAI,EAAE,OAAO,CAAC,QAAQ,CAAC,EAA/D,CAA+D,CAAC,CAAA;AACpI,CAAC;AAxCD,0BAwCC;AAES,OAAQ,CAAC,OAAO,GAAG,OAAO,CAAA;AACpC,MAAM,CAAC,OAAO,GAAG,OAAO,CAAA"}
++{"version":3,"file":"index.js","sourceRoot":"","sources":["../../src/index.ts"],"names":[],"mappings":";;;;;;;;;;;;;AAAA,2DAA8E;AAE9E,8CAAwC;AACxC,mDAGyB;AACzB,yCAAsC;AACtC,+BAA0C;AAC1C,qCAAmC;AACnC,eAAI,EAAE,CAAA;AAEN,SAAwB,OAAO,CAAC,IAAS,EAAE,WAAsB;IAC/D,IAAM,cAAc,GAAY;QAC9B,QAAQ,EAAE,SAAS;KACpB,CAAA;IACD,IAAM,OAAO,yBACR,cAAc,GACd,WAAW,CACf,CAAA;IAED;;;OAGG;IACH,IAAM,gBAAgB,GACpB,cAAO,CAAC,IAAI,CAAC;QACb,IAAI,CAAC,MAAM,GAAG,CAAC;QACf,IAAI,CAAC,MAAM,CAAC,UAAC,CAAC,EAAE,CAAC,IAAK,OAAA,CAAC,IAAI,eAAQ,CAAC,CAAC,CAAC,EAAhB,CAAgB,EAAE,IAAI,CAAC,CAAA;IAE/C,IAAI,CAAC,CAAC,eAAQ,CAAC,IAAI,CAAC,IAAI,gBAAgB,CAAC,EAAE;QACzC,MAAM,IAAI,KAAK,CAAC,mDAAmD,CAAC,CAAA;KACrE;IAED,IAAM,aAAa,GAAG,qCAAgB,CAAC,iBAAO,CAAC,IAAI,CAAC,CAAC,CAAA;IACrD;;;OAGG;IACH,0CAAqB,CAAC,aAAa,CAAC,CAAA;IAEpC,IAAM,KAAK,GAAG,oBAAQ,CAAC,aAAa,EAAE,OAAO,CAAC,QAAQ,CAAC,CAAA;IAEvD,2BAA2B;IAC3B,KAAK,CAAC,GAAG,CAAC,UAAC,EAAE;QACX,IAAI,CAAC,EAAE,CAAC,IAAI,CAAC,UAAU,CAAC,OAAO,CAAC,QAAQ,CAAC,EAAE;YACzC,EAAE,CAAC,IAAI,GAAG,KAAG,OAAO,CAAC,QAAQ,GAAG,EAAE,CAAC,IAAM,CAAC;SAC3C;QACD,OAAO,EAAE,CAAC;IACZ,CAAC,CAAC,CAAA;IAEF,OAAO,yCAAwB,CAAC,aAAa,EAAE,KAAK,EAAE,OAAO,CAAC,QAAQ,CAAC,CAAC,GAAG,CAAC,UAAA,IAAI,IAAI,OAAA,kDAAiC,CAAC,IAAI,EAAE,IAAI,EAAE,OAAO,CAAC,QAAQ,CAAC,EAA/D,CAA+D,CAAC,CAAA;AACtJ,CAAC;AAxCD,0BAwCC;AAES,OAAQ,CAAC,OAAO,GAAG,OAAO,CAAA;AACpC,MAAM,CAAC,OAAO,GAAG,OAAO,CAAA"}
 \ No newline at end of file
 diff --git a/build/src/model.js b/build/src/model.js
 index e994e001ee8f6e8dbbf65330e466a66123ff4ca0..8c991d197bb536331f28d645e939bca75ee31897 100644
@@ -253,7 +447,7 @@ index c40a4382f771a4dfed283f0c12e25876dfe95ca9..4e63729a371cebc84096ff0ee22998e7
 +{"version":3,"file":"model.js","sourceRoot":"","sources":["../../src/model.ts"],"names":[],"mappings":";;;AAAA,IAAY,SAKX;AALD,WAAY,SAAS;IACnB,mDAAS,CAAA;IACT,2CAAK,CAAA;IACL,6CAAM,CAAA;IACN,yCAAI,CAAA;AACN,CAAC,EALW,SAAS,GAAT,iBAAS,KAAT,iBAAS,QAKpB"}
 \ No newline at end of file
 diff --git a/build/src/replace.js b/build/src/replace.js
-index 7c08c815f1a0021726dbc32d9649521e98875f3c..a6d33db4549346d4ea4326b48024fe4354920e00 100644
+index 7c08c815f1a0021726dbc32d9649521e98875f3c..f23cc16616fccbda313f11bcd41900a418f568c6 100644
 --- a/build/src/replace.js
 +++ b/build/src/replace.js
 @@ -1,7 +1,9 @@
@@ -291,7 +485,31 @@ index 7c08c815f1a0021726dbc32d9649521e98875f3c..a6d33db4549346d4ea4326b48024fe43
                      }
                      else if (type === 'object' && thisObj.properties) {
                          obj[key] = setJson(thisObj);
-@@ -103,6 +111,12 @@ function findSameObj(json, typeMap, returnObj, originJson) {
+@@ -57,15 +65,19 @@ function setJson(json) {
+                 }
+             }
+             else {
+-                obj = [];
++                // 修复: 简单类型的数组会出现二维数组, 如 "navigatepageNums":[ [0] ] , 最后导致生成的类型出现`xx[][]`问题
++                // obj = []
+                 if (json.items.type === 'string' || json.items.type === 'Date') {
+-                    obj.push('string');
++                    // obj.push('string')
++                    obj = 'string';
+                 }
+                 else if (json.items.type === 'number' || json.items.type === 'integer') {
+-                    obj.push(0);
++                    // obj.push(0)
++                    obj = 0;
+                 }
+                 else if (json.items.type === 'boolean') {
+-                    obj.push(false);
++                    // obj.push(false)
++                    obj = false;
+                 }
+             }
+             return obj;
+@@ -103,6 +115,12 @@ function findSameObj(json, typeMap, returnObj, originJson) {
              }
          }
          else if (obj.type === 'object' && obj.properties) {
@@ -305,13 +523,13 @@ index 7c08c815f1a0021726dbc32d9649521e98875f3c..a6d33db4549346d4ea4326b48024fe43
              returnObj = res.returnObj;
              originJson = res.originJson;
 diff --git a/build/src/replace.js.map b/build/src/replace.js.map
-index 65cf8ac819fefe6991e1e64f9bfbaadea1796d43..6254e7d1f0c90f9ae65f7a6faec492a4f497094e 100644
+index 65cf8ac819fefe6991e1e64f9bfbaadea1796d43..4e9ce172ab814bc9a2eabd629ee538428d70fbe5 100644
 --- a/build/src/replace.js.map
 +++ b/build/src/replace.js.map
 @@ -1 +1 @@
 -{"version":3,"file":"replace.js","sourceRoot":"","sources":["../../src/replace.ts"],"names":[],"mappings":"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"}
 \ No newline at end of file
-+{"version":3,"file":"replace.js","sourceRoot":"","sources":["../../src/replace.ts"],"names":[],"mappings":"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"}
++{"version":3,"file":"replace.js","sourceRoot":"","sources":["../../src/replace.ts"],"names":[],"mappings":"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"}
 \ No newline at end of file
 diff --git a/build/src/util.js b/build/src/util.js
 index b353dab50034ed465a96d6dab4bd084429601417..f85456d78973be29cba5a7eda13a7e4486f26ee8 100644
@@ -363,11 +581,12 @@ index 60bbd6a73d52d483dcf07d5630332f82e06e7374..97534561a8e8ceb43cabd9caf5e6b55f
 +{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../test/util/index.ts"],"names":[],"mappings":";;;AAAa,QAAA,gBAAgB,GAAG,UAAA,GAAG,IAAI,OAAA,GAAG,CAAC,OAAO,CAAC,KAAK,EAAE,EAAE,CAAC,EAAtB,CAAsB,CAAA"}
 \ No newline at end of file
 diff --git a/dev/index.ts b/dev/index.ts
-index 43f0c3007dafeb488c1f99e4caffff86927fc659..9deb0d6ae01dcb04f819ec17191ab3a5d1941af1 100644
+index 43f0c3007dafeb488c1f99e4caffff86927fc659..3a9f92349739fb98ff116ae573da2eae379896a4 100644
 --- a/dev/index.ts
 +++ b/dev/index.ts
-@@ -1,4 +1,20 @@
- import RawToTs from '../src/index'
+@@ -1,4 +1,178 @@
+-import RawToTs from '../src/index'
++import RawToTs from "../src/index";
  
 -const abc = {"type":"object","properties":{"current":{"type":"integer","format":"int64","description":"12123"},"hitCount":{"type":"boolean"},"pages":{"type":"integer","format":"int64"},"records":{"type":"array","items":{"type":"object","properties":{"deleteTime":{"type":"string","format":"date-time","description":"删除时间"},"deleted":{"type":"integer","format":"int32","description":"是否删除 1 删除 0 存在"},"id":{"type":"integer","format":"int64"},"reportFileName":{"type":"string","description":"上报信息"},"reportFileUrl":{"type":"string","description":"上报文件url"},"reportId":{"type":"string","description":"上传编号"},"stateType":{"type":"string","description":"状态 0失败 1成功"},"statisticalName":{"type":"string","description":"上报人"},"statisticalTime":{"type":"string","format":"date-time","description":"上报时间"},"updateTime":{"type":"string","format":"date-time","description":"修改时间"}},"title":"CityRoadGuaranteeReport","$$ref":"#/definitions/CityRoadGuaranteeReport","required":["deleted","id","reportFileName","reportFileUrl","reportId","stateType","statisticalName","statisticalTime","updateTime"]},"minItems":1,"maxItems":1},"searchCount":{"type":"boolean"},"size":{"type":"integer","format":"int64"},"total":{"type":"integer","format":"int64"}},"title":"IPage«CityRoadGuaranteeReport»","$$ref":"#/definitions/IPage«CityRoadGuaranteeReport»","required":["hitCount","pages","records","searchCount","size","total"]}
 -console.log(RawToTs(abc))
@@ -379,21 +598,201 @@ index 43f0c3007dafeb488c1f99e4caffff86927fc659..9deb0d6ae01dcb04f819ec17191ab3a5
 +// const requestScheme = {};
 +// console.log(RawToTs(requestScheme, { rootName: 'PaymentInfoDetailReq' }))
 +
-+
-+// // yapi: 数组类型（https://yapi.textile-story.com/project/1208/interface/api/83689）
-+// const yapiWithArr = {"type":"object","properties":{"successful":{"type":"boolean","description":""},"code":{"type":"string","description":""},"message":{"type":"string","description":""},"data":{"type":"object","properties":{"page":{"type":"integer","description":""},"total":{"type":"integer","description":""},"list":{"type":"array","items":{"type":"object","properties":{"spuId":{"type":"integer","description":"商品id"},"platformType":{"type":"integer","description":"分发平台类型（1：Temu全托管，2：Temu半托管）"},"lastCatId":{"type":"integer","description":"最后一级品类id"},"lastCatName":{"type":"string","description":"最后一级品类"},"mainImgUrl":{"type":"string","description":"主图"},"spuCode":{"type":"string","description":"内部商品编码"},"spuName":{"type":"string","description":"商品名称"},"systemCatCode":{"type":"string","description":"品类"},"floralRelated":{"type":"integer","description":"是否关联版型（0：否，1：是）"},"templated":{"type":"integer","description":"否光板款（0：否，1：是）"},"floralName":{"type":"string","description":"关联版型"},"floralCode":{"type":"string","description":"关联母版"},"templateCode":{"type":"string","description":"关联光板"},"skcList":{"type":"array","items":{"type":"object","properties":{"skcCode":{"type":"string","description":"skc编码"},"color":{"type":"string","description":"skc 色值"}}},"description":"skc"},"unPublishCount":{"type":"integer","description":"未发布数量"},"publishCount":{"type":"integer","description":"已发布数量"},"creatorName":{"type":"string","description":"创建人"},"createdTime":{"type":"string","description":"创建时间","mock":{"mock":"@datetime"}},"spuState":{"type":"integer","description":"商品状态（0：启用，1：禁用）"},"publishState":{"type":"integer","description":"是否发布（0：未发布，1：已发布 ，2：发布中）"},"sourceType":{"type":"integer","description":"任务来源（0：新增 1：光板，2：版型）"},"skuCount":{"type":"integer","description":"sku数量"},"failPublishCount":{"type":"integer","description":"发布失败数量","default":"0"},"publishRecordCount":{"type":"integer","description":"发布记录数量"},"modelName":{"type":"string","description":"模特"}}},"description":""}},"description":""}},"$schema":"http://json-schema.org/draft-04/schema#"}
-+// const interfaceScheme = yapiWithArr.properties.data;
-+// console.log(RawToTs(interfaceScheme, { rootName: 'PaymentInfoDetailRes' }))
++// yapi: 数组类型（https://yapi.textile-story.com/project/1208/interface/api/83689）
++const yapiWithArr = {
++  type: "object",
++  properties: {
++    successful: { type: "boolean", description: "" },
++    code: { type: "string", description: "" },
++    message: { type: "string", description: "" },
++    data: {
++      type: "object",
++      properties: {
++        page: { type: "integer", description: "" },
++        total: { type: "integer", description: "" },
++        list: {
++          type: "array",
++          items: {
++            type: "object",
++            properties: {
++              spuId: { type: "integer", description: "商品id" },
++              platformType: {
++                type: "integer",
++                description: "分发平台类型（1：Temu全托管，2：Temu半托管）",
++              },
++              navigatepageNums: { type: "array", items: { type: "integer" } },
++              lastCatId: { type: "integer", description: "最后一级品类id" },
++              lastCatName: { type: "string", description: "最后一级品类" },
++              mainImgUrl: { type: "string", description: "主图" },
++              spuCode: { type: "string", description: "内部商品编码" },
++              spuName: { type: "string", description: "商品名称" },
++              systemCatCode: { type: "string", description: "品类" },
++              floralRelated: {
++                type: "integer",
++                description: "是否关联版型（0：否，1：是）",
++              },
++              templated: {
++                type: "integer",
++                description: "否光板款（0：否，1：是）",
++              },
++              floralName: { type: "string", description: "关联版型" },
++              floralCode: { type: "string", description: "关联母版" },
++              templateCode: { type: "string", description: "关联光板" },
++              skcList: {
++                type: "array",
++                items: {
++                  type: "object",
++                  properties: {
++                    skcCode: { type: "string", description: "skc编码" },
++                    color: { type: "string", description: "skc 色值" },
++                  },
++                },
++                description: "skc",
++              },
++              unPublishCount: { type: "integer", description: "未发布数量" },
++              publishCount: { type: "integer", description: "已发布数量" },
++              creatorName: { type: "string", description: "创建人" },
++              createdTime: {
++                type: "string",
++                description: "创建时间",
++                mock: { mock: "@datetime" },
++              },
++              spuState: {
++                type: "integer",
++                description: "商品状态（0：启用，1：禁用）",
++              },
++              publishState: {
++                type: "integer",
++                description: "是否发布（0：未发布，1：已发布 ，2：发布中）",
++              },
++              sourceType: {
++                type: "integer",
++                description: "任务来源（0：新增 1：光板，2：版型）",
++              },
++              skuCount: { type: "integer", description: "sku数量" },
++              failPublishCount: {
++                type: "integer",
++                description: "发布失败数量",
++                default: "0",
++              },
++              publishRecordCount: {
++                type: "integer",
++                description: "发布记录数量",
++              },
++              modelName: { type: "string", description: "模特" },
++            },
++          },
++          description: "",
++        },
++      },
++      description: "",
++    },
++  },
++  $schema: "http://json-schema.org/draft-04/schema#",
++};
++const interfaceScheme = yapiWithArr.properties.data;
++console.log(RawToTs(interfaceScheme, { rootName: "PaymentInfoDetailRes" }));
 +
 +// // yapi: 描述文本格式有问题（https://yapi.textile-story.com/project/1208/interface/api/83774）
-+const yapiWithDesc = {"type":"object","properties":{"successful":{"type":"boolean","description":""},"code":{"type":"string","description":""},"message":{"type":"string","description":""},"data":{"type":"object","properties":{"paymentStatusCount":{"type":"object","properties":{},"description":"支付状态个数，支付状态枚举如下:\\n    ALL(0, \"全部\"),\\n    WAIT_PAY(10, \"待支付\"),\\n    PAYING(20, \"支付中\"),\\n    PAY_SUCCESS(30, \"支付成功\"),\\n    PAY_FAIL(40, \"支付失败\"),\\n    CANCEL(50, \"已取消\"),"},"paymentPage":{"type":"object","properties":{"page":{"type":"integer","description":""},"total":{"type":"integer","description":""},"list":{"type":"array","items":{"type":"object","properties":{"paymentId":{"type":"integer","description":"支付id"},"paymentNo":{"type":"string","description":"支付流水"},"createdTime":{"type":"string","description":"支付创建时间","mock":{"mock":"@datetime"}},"orderCode":{"type":"string","description":"订单编号"},"channel":{"type":"string","description":"渠道枚举 TIKTOK-抖音 WECHAT-微信"},"orderAmount":{"type":"number","description":"订单金额"},"paymentChannel":{"type":"string","description":"支付渠道 TIKTOK-抖音 WECHAT-微信"},"paymentState":{"type":"integer","description":"支付状态：10-待支付、20-支付中、30-支付成功、40-支付失败、50-已取消"},"actualPaymentAmount":{"type":"number","description":"实付金额"},"paymentTime":{"type":"string","description":"支付时间","mock":{"mock":"@datetime"}}}},"description":"列表描述"}},"description":"支付单据数据"}},"description":""}},"$schema":"http://json-schema.org/draft-04/schema#","description":"分页"}
-+const interfaceScheme = yapiWithDesc.properties.data;
-+console.log(RawToTs(interfaceScheme, { rootName: 'PaymentInfoPageRes' }))
++// const yapiWithDesc = {
++//   type: "object",
++//   properties: {
++//     successful: { type: "boolean", description: "" },
++//     code: { type: "string", description: "" },
++//     message: { type: "string", description: "" },
++//     data: {
++//       type: "object",
++//       properties: {
++//         paymentStatusCount: {
++//           type: "object",
++//           properties: {},
++//           description:
++//             '支付状态个数，支付状态枚举如下:\\n    ALL(0, "全部"),\\n    WAIT_PAY(10, "待支付"),\\n    PAYING(20, "支付中"),\\n    PAY_SUCCESS(30, "支付成功"),\\n    PAY_FAIL(40, "支付失败"),\\n    CANCEL(50, "已取消"),',
++//         },
++//         paymentPage: {
++//           type: "object",
++//           properties: {
++//             page: { type: "integer", description: "" },
++//             total: { type: "integer", description: "" },
++//             list: {
++//               type: "array",
++//               items: {
++//                 type: "object",
++//                 properties: {
++//                   paymentId: { type: "integer", description: "支付id" },
++//                   paymentNo: { type: "string", description: "支付流水" },
++//                   createdTime: {
++//                     type: "string",
++//                     description: "支付创建时间",
++//                     mock: { mock: "@datetime" },
++//                   },
++//                   orderCode: { type: "string", description: "订单编号" },
++//                   channel: {
++//                     type: "string",
++//                     description: "渠道枚举 TIKTOK-抖音 WECHAT-微信",
++//                   },
++//                   orderAmount: { type: "number", description: "订单金额" },
++//                   paymentChannel: {
++//                     type: "string",
++//                     description: "支付渠道 TIKTOK-抖音 WECHAT-微信",
++//                   },
++//                   paymentState: {
++//                     type: "integer",
++//                     description:
++//                       "支付状态：10-待支付、20-支付中、30-支付成功、40-支付失败、50-已取消",
++//                   },
++//                   actualPaymentAmount: {
++//                     type: "number",
++//                     description: "实付金额",
++//                   },
++//                   paymentTime: {
++//                     type: "string",
++//                     description: "支付时间",
++//                     mock: { mock: "@datetime" },
++//                   },
++//                 },
++//               },
++//               description: "列表描述",
++//             },
++//           },
++//           description: "支付单据数据",
++//         },
++//       },
++//       description: "",
++//     },
++//   },
++//   $schema: "http://json-schema.org/draft-04/schema#",
++//   description: "分页",
++// };
++// const interfaceScheme = yapiWithDesc.properties.data;
++// console.log(RawToTs(interfaceScheme, { rootName: "PaymentInfoPageRes" }));
 diff --git a/src/get-interfaces.ts b/src/get-interfaces.ts
-index 98dfb6bab98437c55a2a5870fed8ef3fa200372e..6a77fa28be056b2ae59460c0ca88dfc1136e0b7f 100644
+index 98dfb6bab98437c55a2a5870fed8ef3fa200372e..f8712fcfd39ec4e6fbd4296cf3b2b93e0df7531c 100644
 --- a/src/get-interfaces.ts
 +++ b/src/get-interfaces.ts
-@@ -82,18 +82,29 @@ function replaceTypeObjIdsWithNames(typeObj: { [index: string]: string }, names:
+@@ -34,7 +34,7 @@ function removeNullFromUnion(unionTypeName: string) {
+   return typeNames.join(' | ')
+ }
+ 
+-function replaceTypeObjIdsWithNames(typeObj: { [index: string]: string }, names: NameEntry[]): Object {
++function replaceTypeObjIdsWithNames(typeObj: { [index: string]: string }, names: NameEntry[], rootName: string): Object {
+   return (
+     Object.entries(typeObj)
+       // quote key if is invalid and question mark if optional from array merging
+@@ -52,7 +52,11 @@ function replaceTypeObjIdsWithNames(typeObj: { [index: string]: string }, names:
+           return [key, type, isOptional]
+         }
+ 
+-        const newType = findNameById(type, names)
++        let newType = findNameById(type, names)
++        // 修复: 简单类型的数组类型会带前缀, 如: PaymentInfoDetailResnumbrt[]
++        const isSimpleArr = /(number\[\]|string\[\]|boolean\[\])$/.test(newType);
++        const regex = new RegExp(`^${rootName}`);
++        isSimpleArr && (newType = newType.replace(regex, ''))
+         return [key, newType, isOptional]
+       })
+       // if union has null, remove null and make type optional
+@@ -82,31 +86,41 @@ function replaceTypeObjIdsWithNames(typeObj: { [index: string]: string }, names:
    )
  }
  
@@ -426,7 +825,22 @@ index 98dfb6bab98437c55a2a5870fed8ef3fa200372e..6a77fa28be056b2ae59460c0ca88dfc1
    interfaceString += stringTypeMap
    interfaceString += '}'
  
-@@ -114,3 +125,50 @@ export function getInterfaceDescriptions(typeStructure: TypeStructure, names: Na
+   return interfaceString
+ }
+ 
+-export function getInterfaceDescriptions(typeStructure: TypeStructure, names: NameEntry[]): InterfaceDescription[] {
++export function getInterfaceDescriptions(typeStructure: TypeStructure, names: NameEntry[], rootName: string): InterfaceDescription[] {
+   return names
+     .map(({ id, name }) => {
+       const typeDescription = findTypeById(id, typeStructure.types)
+-
+       if (typeDescription.typeObj) {
+-        const typeMap = replaceTypeObjIdsWithNames(typeDescription.typeObj, names)
++        const typeMap = replaceTypeObjIdsWithNames(typeDescription.typeObj, names, rootName)
+         return { name, typeMap }
+       } else {
+         return null
+@@ -114,3 +128,50 @@ export function getInterfaceDescriptions(typeStructure: TypeStructure, names: Na
      })
      .filter(_ => _ !== null)
  }
@@ -496,7 +910,7 @@ index e0d14ba492a923691d17167a6a83f4ce6fbc74c1..112f8f583f3fabdf7f40ff1550890d5a
            true
          )
 diff --git a/src/index.ts b/src/index.ts
-index 084e184f46c916253b472810d6fe2116ebbfc638..776bed859900c9d59a3fb7e044405ac34f86b2b1 100644
+index 084e184f46c916253b472810d6fe2116ebbfc638..c80eca0f29daf333f0307ee01849e250d35ed6b9 100644
 --- a/src/index.ts
 +++ b/src/index.ts
 @@ -40,8 +40,16 @@ export default function RawToTs(json: any, userOptions ?: Options): string[] {
@@ -513,12 +927,12 @@ index 084e184f46c916253b472810d6fe2116ebbfc638..776bed859900c9d59a3fb7e044405ac3
 +  })
  
 -  return getInterfaceDescriptions(typeStructure, names).map(item => getInterfaceStringFromDescription(item, json))
-+  return getInterfaceDescriptions(typeStructure, names).map(item => getInterfaceStringFromDescription(item, json, options.rootName))
++  return getInterfaceDescriptions(typeStructure, names, options.rootName).map(item => getInterfaceStringFromDescription(item, json, options.rootName))
  }
  
  ( < any > RawToTs).default = RawToTs
 diff --git a/src/replace.ts b/src/replace.ts
-index e4b22f459c30aa8c6182d4222e83bfcb5516b1f5..21a3ab0c4d7be5117fd08f70acbb4cc361c0f60c 100644
+index e4b22f459c30aa8c6182d4222e83bfcb5516b1f5..15eceb5bc2d9c0438ca1e73793ea3bedbd9775d1 100644
 --- a/src/replace.ts
 +++ b/src/replace.ts
 @@ -1,5 +1,6 @@
@@ -541,7 +955,7 @@ index e4b22f459c30aa8c6182d4222e83bfcb5516b1f5..21a3ab0c4d7be5117fd08f70acbb4cc3
          } else if (type === 'object' && thisObj.properties) {
            obj[key] = setJson(thisObj)
          }
-@@ -41,7 +45,10 @@ export function setJson(json: any): any {
+@@ -41,19 +45,26 @@ export function setJson(json: any): any {
            if (type === 'boolean') {
              obj[key] = false
            } else if (type === 'array' && thisObj.items) {
@@ -553,7 +967,27 @@ index e4b22f459c30aa8c6182d4222e83bfcb5516b1f5..21a3ab0c4d7be5117fd08f70acbb4cc3
            } else if (type === 'object' && thisObj.properties) {
              obj[key] = setJson(thisObj)
            }
-@@ -88,6 +95,12 @@ function findSameObj(json: any, typeMap: object, returnObj: any = {}, originJson
+         }
+       } else {
+-        obj = []
++        // 修复: 简单类型的数组会出现二维数组, 如 "navigatepageNums":[ [0] ] , 最后导致生成的类型出现`xx[][]`问题
++        // obj = []
+         if (json.items.type === 'string' || json.items.type === 'Date') {
+-          obj.push('string')
++          // obj.push('string')
++          obj = 'string'
+         } else if (json.items.type === 'number' || json.items.type === 'integer') {
+-          obj.push(0)
++          // obj.push(0)
++          obj = 0
+         } else if (json.items.type === 'boolean') {
+-          obj.push(false)
++          // obj.push(false)
++          obj = false
+         }
+       }
+       return obj
+@@ -88,6 +99,12 @@ function findSameObj(json: any, typeMap: object, returnObj: any = {}, originJson
          return { returnObj, originJson }
        }
      } else if (obj.type === 'object' && obj.properties) {

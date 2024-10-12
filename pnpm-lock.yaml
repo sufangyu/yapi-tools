@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   raw-to-ts@0.1.4:
-    hash: qsbm2jwg3b2t6zg3tkodwwjr54
+    hash: kkv7qlvgd4cm3kfzr6fosn45je
     path: patches/raw-to-ts@0.1.4.patch
 
 importers:
@@ -27,7 +27,7 @@ importers:
         version: 1.29.0
       raw-to-ts:
         specifier: ^0.1.4
-        version: 0.1.4(patch_hash=qsbm2jwg3b2t6zg3tkodwwjr54)
+        version: 0.1.4(patch_hash=kkv7qlvgd4cm3kfzr6fosn45je)
       reflect-metadata:
         specifier: ^0.2.2
         version: 0.2.2
@@ -5138,7 +5138,7 @@ snapshots:
 
   quick-lru@5.1.1: {}
 
-  raw-to-ts@0.1.4(patch_hash=qsbm2jwg3b2t6zg3tkodwwjr54):
+  raw-to-ts@0.1.4(patch_hash=kkv7qlvgd4cm3kfzr6fosn45je):
     dependencies:
       es7-shim: 6.0.0
       hash.js: 1.1.7

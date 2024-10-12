@@ -52,8 +52,9 @@ export const handlerResponse = (
 
       // console.log("requestRaw =>>", requestRaw);
       // console.log("responseRaw =>>", responseRaw);
+      // console.log('transformData =>>', transformData);
       // console.log("请求代码", requestTypeCode);
-      // console.log("响应代码", responseTypeCode);
+      // console.log('响应代码', responseTypeCode);
 
       // 渲染 app
       // const code = `${requestCode}\n\n${responseCode}`;

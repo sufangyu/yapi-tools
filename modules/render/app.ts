@@ -151,10 +151,10 @@ class App extends LitElement {
       let copyText = '';
       switch (key) {
         case 'requestTypeCode':
-          copyText = this.interfaceCode?.requestTypeCode ?? '';
+          copyText = this.requestTypeCode ?? '';
           break;
         case 'responseTypeCode':
-          copyText = this.interfaceCode?.responseTypeCode ?? '';
+          copyText = this.responseTypeCode ?? '';
           break;
         case 'requestFunc':
           copyText = this.getRequestFuncStr();
@@ -175,6 +175,14 @@ class App extends LitElement {
   //   console.log(`Yapi-Tools-Extension: Rendering completed!`);
   // }
 
+
+  /**
+   * 获取请求函数字符串
+   *
+   * @private
+   * @return {*}  {string}
+   * @memberof App
+   */
   private getRequestFuncStr(): string {
     let { method, title, pageUrl, rootNameBase, path, reqParams, reqQuery, reqBody } =
       this.interfaceCode;
@@ -271,8 +279,6 @@ class App extends LitElement {
   }
 
   render() {
-    const { requestTypeCode, responseTypeCode } = this.interfaceCode;
-
     return html`
       <div class="interface">
         <h2 class="interface-head">类型定义</h2>
@@ -290,7 +296,7 @@ class App extends LitElement {
             </div>
             <div class="interface-item-body">
               <div class="interface-code">
-                <style-code code="${requestTypeCode}"></style-code>
+                <style-code code="${this.requestTypeCode}"></style-code>
               </div>
             </div>
           </div>
@@ -308,7 +314,7 @@ class App extends LitElement {
             </div>
             <div class="interface-item-body">
               <div class="interface-code">
-                <style-code code="${responseTypeCode}"></style-code>
+                <style-code code="${this.responseTypeCode}"></style-code>
               </div>
             </div>
           </div>
