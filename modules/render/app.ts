@@ -1,62 +1,71 @@
-import { LitElement, html, css } from "lit";
-import { customElement, property } from "lit/decorators.js";
-import "reflect-metadata";
-import "./components/style-code";
-import { InterfaceCode } from "./types";
+import { LitElement, html, css } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import 'reflect-metadata';
+import { type Setting } from '../setting';
+import './components/style-code';
+import { InterfaceCode } from './types';
 
-@customElement("interface-extension")
+@customElement('interface-extension')
 class App extends LitElement {
+  /**
+   * 请求体类型代码
+   *
+   * @memberof App
+   */
   @property({ type: String })
-  method = "";
+  requestTypeCode = '';
 
+  /**
+   * 响应体类型代码
+   *
+   * @memberof App
+   */
   @property({ type: String })
-  title = "";
+  responseTypeCode = '';
 
-  @property({ type: String })
-  path = "";
+  /**
+   * TS 接口信息
+   *
+   * @type {Partial<InterfaceCode>}
+   * @memberof App
+   */
+  @property({ type: Object })
+  interfaceCode: Partial<InterfaceCode> = {};
 
-  @property({ type: String })
-  pageUrl = "";
+  /**
+   * 配置信息
+   *
+   * @type {Partial<Setting>}
+   * @memberof App
+   */
+  @property({ type: Object })
+  setting: Partial<Setting> = {};
 
-  @property({ type: String })
-  requestTypeCode = "";
-
-  @property({ type: String })
-  responseTypeCode = "";
-
-  constructor(interfaceCodeStr: InterfaceCode) {
+  constructor(interfaceCode: InterfaceCode, setting: Setting) {
     super();
-    const { method, title, path, pageUrl, requestTypeCode, responseTypeCode } =
-      interfaceCodeStr;
+    const { title, pageUrl, requestTypeCode, responseTypeCode } = interfaceCode;
 
-    this.method = method;
-    this.title = title;
-    this.path = path;
-    this.pageUrl = pageUrl;
+    this.interfaceCode = interfaceCode;
+    this.setting = setting;
+
     this.requestTypeCode = [
       `/**`,
       ` * ${title} 请求参数类型`,
       ` * @see ${pageUrl}`,
       ` */`,
-      `${requestTypeCode}`,
-    ].join("\n");
+      `${requestTypeCode}`
+    ].join('\n');
     this.responseTypeCode = [
       `/**`,
       ` * ${title} 响应体类型`,
       ` * @see ${pageUrl}`,
       ` */`,
-      `${responseTypeCode}`,
-    ].join("\n");
+      `${responseTypeCode}`
+    ].join('\n');
 
-    // console.log(
-    //   "============================== 渲染 =============================="
-    // );
-    // console.log(this.method);
-    // console.log(this.title);
-    // console.log(this.path);
-    // console.log(this.pageUrl);
-    // console.log(this.requestTypeCode);
-    // console.log(this.responseTypeCode);
+    // console.log('============================== 渲染 ==============================');
+    // console.log(this.setting);
+    // console.log(this.interfaceCode);
   }
 
   static styles = css`
@@ -138,10 +147,24 @@ class App extends LitElement {
   async handleCodeCopy(ev: Event) {
     try {
       const target = ev.target as HTMLElement | null;
-      const key = target?.dataset["key"] as keyof InterfaceCode;
-      const text = this[key];
-      await navigator.clipboard.writeText(text);
-      alert("已复制到剪切板！");
+      const key = target?.dataset['key'];
+      let copyText = '';
+      switch (key) {
+        case 'requestTypeCode':
+          copyText = this.interfaceCode?.requestTypeCode ?? '';
+          break;
+        case 'responseTypeCode':
+          copyText = this.interfaceCode?.responseTypeCode ?? '';
+          break;
+        case 'requestFunc':
+          copyText = this.getRequestFuncStr();
+          break;
+        default:
+          break;
+      }
+
+      await navigator.clipboard.writeText(copyText);
+      alert('已复制到剪切板！');
     } catch (error: any) {
       alert(`复制失败：${error.message as string}`);
     }
@@ -152,7 +175,104 @@ class App extends LitElement {
   //   console.log(`Yapi-Tools-Extension: Rendering completed!`);
   // }
 
+  private getRequestFuncStr(): string {
+    let { method, title, pageUrl, rootNameBase, path, reqParams, reqQuery, reqBody } =
+      this.interfaceCode;
+    const { interfacePrefix, requestFuncTypes } = this.setting;
+    // console.log("interfaceCode", reqParams, reqQuery, reqBody);
+
+    const pathRes = (path ?? '').replace(/{/g, '${');
+    const funcName = interfacePrefix ? rootNameBase?.replace(/^i/i, '') : rootNameBase;
+    const funcNameRes = lowercaseFirstLetter(funcName ?? '');
+    const methodRes = method!.toLocaleLowerCase();
+    const reqInterfaceName = `${requestFuncTypes ? 'Types.' : ''}${rootNameBase}Req`;
+    const resInterfaceName = `${requestFuncTypes ? 'Types.' : ''}${rootNameBase}Res`;
+
+    // // TEST: 需要注释掉
+    // reqParams = [
+    //   { name: "orderId", desc: "订单ID" },
+    //   { name: "userId", desc: "用户ID" },
+    // ];
+
+    // Query 参数
+    let funcParamsQuery = '';
+    let reqQueryStr = '';
+    if ((reqQuery ?? []).length > 0) {
+      funcParamsQuery = `params: ${reqInterfaceName}`;
+      reqQueryStr = 'params';
+    }
+
+    // Body 参数
+    let funcParamsBody = '';
+    let reqBodyStr = '';
+
+    if (reqBody) {
+      funcParamsBody = `data: ${reqInterfaceName}`;
+      reqBodyStr = 'data';
+    }
+
+    // 函数参数（需要处理路径参数情况）
+    const reqFuncParamsArr = [funcParamsQuery, funcParamsBody].filter(Boolean);
+    if ((reqParams ?? []).length > 0) {
+      const reqParamsArr = (reqParams ?? []).map((it) => `${it.name}: string`).filter(Boolean);
+      reqFuncParamsArr.unshift(...reqParamsArr);
+    }
+
+    // 函数注释中的参数列表
+    const reqFuncParamsCommentsArr = [
+      ...(reqParams ?? []).map((it) => `@params {string} ${it.name} ${it.desc || ''}`),
+      funcParamsQuery ? `@params {${reqInterfaceName}} ${reqQueryStr} ${title}参数` : '',
+      funcParamsBody ? `@params {${reqInterfaceName}} ${reqBodyStr} ${title}参数` : ''
+    ].filter(Boolean);
+
+    const requestFuncArr = [
+      `/**`,
+      ` * ${title}`,
+      ` *`,
+      `${reqFuncParamsCommentsArr.map((it) => ` * ${it}`).join('\n')}`,
+      ` * @see ${pageUrl}`,
+      ` * @return {*}`,
+      ` */`,
+      `export const ${funcNameRes}Api = (${reqFuncParamsArr.join(', ')}) => {`,
+      `  const url = \`${pathRes}\`;`,
+      `  return http.${methodRes}<${resInterfaceName}>({`,
+      `    url,`,
+      `    ${reqQueryStr ? `${reqQueryStr},` : ''}`,
+      `    ${reqBodyStr ? `${reqBodyStr},` : ''}`,
+      `    loading: true,`,
+      `  })`,
+      `};`
+    ].filter((item) => item.replace(/\s+/g, '') !== ''); // 过滤空行
+
+    return requestFuncArr.join('\n');
+  }
+
+  renderRequestFunc() {
+    const { generateRequestFunc } = this.setting;
+    const requestFuncStr = this.getRequestFuncStr();
+
+    return generateRequestFunc
+      ? html`
+          <div class="interface-item">
+            <div class="interface-item-head">
+              <span>请求函数</span>
+              <button @click="${this.handleCodeCopy}" data-key="requestFunc" class="interface-copy">
+                复制
+              </button>
+            </div>
+            <div class="interface-item-body">
+              <div class="interface-code">
+                <style-code code="${requestFuncStr}"></style-code>
+              </div>
+            </div>
+          </div>
+        `
+      : html``;
+  }
+
   render() {
+    const { requestTypeCode, responseTypeCode } = this.interfaceCode;
+
     return html`
       <div class="interface">
         <h2 class="interface-head">类型定义</h2>
@@ -170,7 +290,7 @@ class App extends LitElement {
             </div>
             <div class="interface-item-body">
               <div class="interface-code">
-                <style-code code="${this.requestTypeCode}"></style-code>
+                <style-code code="${requestTypeCode}"></style-code>
               </div>
             </div>
           </div>
@@ -188,10 +308,12 @@ class App extends LitElement {
             </div>
             <div class="interface-item-body">
               <div class="interface-code">
-                <style-code code="${this.responseTypeCode}"></style-code>
+                <style-code code="${responseTypeCode}"></style-code>
               </div>
             </div>
           </div>
+
+          ${this.renderRequestFunc()}
         </div>
       </div>
     `;

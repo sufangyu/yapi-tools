@@ -20,7 +20,6 @@ export const queryToTypeCode = (
   query: Query[],
   rootName: string = "Request",
   defaultDesc: string = "注释"
-
 ): string => {
   const content = query.reduce((code, { required, name, desc }) => {
     const symbol = required === "0" ? "?" : "";
@@ -47,3 +46,18 @@ interface Query {
    */
   desc?: string;
 }
+
+/**
+ * 首字母转小写
+ *
+ * @param {string} str
+ * @return {*}  {string}
+ */
+export const lowercaseFirstLetter = (str: string): string => {
+  // 处理空字符串
+  if (!str) {
+    return str;
+  }
+
+  return str.charAt(0).toLowerCase() + str.slice(1);
+};

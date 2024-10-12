@@ -12,7 +12,7 @@ export interface SchemaNode  {
    * @type {string}
    * @memberof SchemaNode
    */
-  type: string;
+  type?: string;
   /**
    * 描述
    *
@@ -21,10 +21,17 @@ export interface SchemaNode  {
    */
   description?: string;
   /**
-   * 属性
+   * 对象类型的属性
    *
    * @type {Record<string, SchemaNode>}
    * @memberof SchemaNode
    */
   properties?: Record<string, SchemaNode>;
+  /**
+   * 数组类型的子类型
+   *
+   * @type {SchemaNode}
+   * @memberof SchemaNode
+   */
+  items?: SchemaNode;
 }

@@ -26,6 +26,27 @@ export interface InterfaceCode {
    */
   path: string;
   /**
+   * 接口地址中的参数
+   *
+   * @type {{name: string; desc: string}[]}
+   * @memberof InterfaceCode
+   */
+  reqParams: {name: string; desc: string}[];
+  /**
+   * 请求 Query
+   *
+   * @type {{name: string; desc: string}[]}
+   * @memberof InterfaceCode
+   */
+  reqQuery: {name: string; desc: string}[];
+  /**
+   * 请求 Body
+   *
+   * @type {string}
+   * @memberof InterfaceCode
+   */
+  reqBody: string;
+  /**
    * 请求参数类型
    *
    * @type {string}
@@ -46,6 +67,13 @@ export interface InterfaceCode {
    * @memberof InterfaceCode
    */
   pageUrl: string;
+  /**
+   * 函数、类型基础名称
+   *
+   * @type {string}
+   * @memberof InterfaceCode
+   */
+  rootNameBase: string;
 }
 
 /**
