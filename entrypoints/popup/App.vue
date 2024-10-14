@@ -9,7 +9,11 @@
   
   <div class="setting-body">
     <div class="setting-item">
-      <span class="label">接口命名带前缀 I:</span>
+      <el-alert title="配置修改后需刷新页面才生效！！！" size="small" type="success" :closable="false" />
+    </div>
+
+    <div class="setting-item">
+      <span class="label">接口命名带前缀(I):</span>
       <div>
         <el-switch
           v-model="setting.interfacePrefix"
@@ -46,7 +50,7 @@
     </div>
 
     <div class="setting-item">
-      <span class="label">请求函数类型用 Types :</span>
+      <span class="label">类型使用时带前缀(Types.) :</span>
       <div>
         <el-switch
           v-model="setting.requestFuncTypes"
@@ -111,11 +115,14 @@ onMounted(async () => {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 4px 16px;
+  padding: 8px 16px;
+  background-color: #F5F7FA;
 
   h1 {
     font-size: 16px;
     font-weight: normal;
+    padding: 0;
+    margin: 0;
   }
 
   .logo {
