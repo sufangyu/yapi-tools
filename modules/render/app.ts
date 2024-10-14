@@ -242,7 +242,7 @@ class App extends LitElement {
       ` * @return {*}`,
       ` */`,
       `export const ${funcNameRes}Api = (${reqFuncParamsArr.join(', ')}) => {`,
-      `  const url = \`${pathRes}\`;`,
+      `  const url = \`${pathRes}\`;\n`,
       `  return http.${methodRes}<${resInterfaceName}>({`,
       `    url,`,
       `    ${reqQueryStr ? `${reqQueryStr},` : ''}`,
@@ -250,7 +250,7 @@ class App extends LitElement {
       `    loading: true,`,
       `  })`,
       `};`
-    ].filter((item) => item.replace(/\s+/g, '') !== ''); // 过滤空行
+    ].filter((item) => item.replace(/[^\S\r\n]/g, '') !== ''); // 过滤空行
 
     return requestFuncArr.join('\n');
   }
