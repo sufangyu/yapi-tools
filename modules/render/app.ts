@@ -50,14 +50,14 @@ class App extends LitElement {
 
     this.requestTypeCode = [
       `/**`,
-      ` * ${title} 请求参数类型`,
+      ` * ${title} 请求参数`,
       ` * @see ${pageUrl}`,
       ` */`,
       `${requestTypeCode}`
     ].join('\n');
     this.responseTypeCode = [
       `/**`,
-      ` * ${title} 响应体类型`,
+      ` * ${title} 响应体`,
       ` * @see ${pageUrl}`,
       ` */`,
       `${responseTypeCode}`
