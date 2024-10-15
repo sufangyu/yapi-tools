@@ -18,10 +18,12 @@
     "@mswjs/interceptors": "^0.35.8",
     "element-plus": "^2.8.4",
     "lit": "^3.2.0",
+    "monaco-editor": "^0.52.0",
     "prismjs": "^1.29.0",
     "raw-to-ts": "^0.1.4",
     "reflect-metadata": "^0.2.2",
     "rollup-plugin-polyfill-node": "^0.13.0",
+    "vite-plugin-monaco-editor": "^1.1.0",
     "vue": "^3.4.34"
   },
   "devDependencies": {
