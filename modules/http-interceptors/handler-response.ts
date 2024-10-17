@@ -57,7 +57,7 @@ export const handlerResponse = (
       // console.log('响应代码', responseTypeCode);
 
       // 渲染 app
-      // const code = `${requestCode}\n\n${responseCode}`;
+      const mockData = jsonSchemaToMock(responseRaw as any);
       const interfaceCode: InterfaceCode = {
         method: data.method,
         title: data.title,
@@ -68,8 +68,10 @@ export const handlerResponse = (
         requestTypeCode,
         responseTypeCode,
         pageUrl: document.location.href,
-        rootNameBase
+        rootNameBase,
+        mockData: mockData ? JSON.stringify(mockData, null, 2) : ''
       };
+
       render(interfaceCode, setting);
     } catch (error) {
       console.error(`Yapi-Tools-Extension: ${(error as Error).message as string}`);

@@ -31,14 +31,14 @@ export interface InterfaceCode {
    * @type {{name: string; desc: string}[]}
    * @memberof InterfaceCode
    */
-  reqParams: {name: string; desc: string}[];
+  reqParams: { name: string; desc: string }[];
   /**
    * 请求 Query
    *
    * @type {{name: string; desc: string}[]}
    * @memberof InterfaceCode
    */
-  reqQuery: {name: string; desc: string}[];
+  reqQuery: { name: string; desc: string }[];
   /**
    * 请求 Body
    *
@@ -74,6 +74,13 @@ export interface InterfaceCode {
    * @memberof InterfaceCode
    */
   rootNameBase: string;
+  /**
+   * 接口 Mock 数据
+   *
+   * @type {string}
+   * @memberof InterfaceCode
+   */
+  mockData: string;
 }
 
 /**

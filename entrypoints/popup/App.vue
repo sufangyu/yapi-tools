@@ -1,4 +1,3 @@
-
 <template>
   <div class="setting-header">
     <a class="logo" href="https://wxt.dev" target="_blank">
@@ -6,10 +5,15 @@
     </a>
     <h1>配置</h1>
   </div>
-  
+
   <div class="setting-body">
     <div class="setting-item">
-      <el-alert title="配置修改后需刷新页面才生效！！！" size="small" type="success" :closable="false" />
+      <el-alert
+        title="配置修改后需刷新页面才生效！！！"
+        size="small"
+        type="success"
+        :closable="false"
+      />
     </div>
 
     <div class="setting-item">
@@ -31,6 +35,19 @@
         <el-input
           v-model.trim="setting.keyPath"
           placeholder="请输入"
+          @change="handleSettingChange"
+        />
+      </div>
+    </div>
+
+    <div class="setting-item">
+      <span class="label">生成 Mock 数据:</span>
+      <div>
+        <el-switch
+          v-model="setting.generateMockData"
+          inline-prompt
+          active-text="是"
+          inactive-text="否"
           @change="handleSettingChange"
         />
       </div>
@@ -61,8 +78,6 @@
         />
       </div>
     </div>
-
-
   </div>
 </template>
 
@@ -76,7 +91,7 @@ const setting = ref<Setting>(settingDefault)
 const handleSettingChange = async (val: boolean) => {
   console.log('setting', setting.value);
   try {
-    await storage.setItem(storageKeyForSetting, setting.value);  
+    await storage.setItem(storageKeyForSetting, setting.value);
     ElMessage({
       message: '设置成功, 请刷新',
       type: 'success',
@@ -96,7 +111,7 @@ const handleSettingChange = async (val: boolean) => {
 
 const initSetting = async () => {
   const installSetting = await storage.getItem(storageKeyForSetting);
-  if (installSetting) { 
+  if (installSetting) {
     setting.value = {
       ...settingDefault,
       ...((installSetting ?? {}) as Setting),
@@ -109,14 +124,13 @@ onMounted(async () => {
 })
 </script>
 
-
 <style lang="scss" scoped>
 .setting-header {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 8px 16px;
-  background-color: #F5F7FA;
+  background-color: #f5f7fa;
 
   h1 {
     font-size: 16px;
@@ -135,8 +149,6 @@ onMounted(async () => {
     }
   }
 }
-
-
 
 .setting-body {
   padding: 16px;

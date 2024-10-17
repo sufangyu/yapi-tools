@@ -109,7 +109,7 @@ class App extends LitElement {
       background-color: rgba(255, 255, 255, 0.8);
       padding: 5px 10px;
       line-height: 1em;
-      font-size: 13px;
+      font-size: 12px;
       // top: 10px;
       // right: 30px;
       border: none;
@@ -145,8 +145,12 @@ class App extends LitElement {
   `;
 
   async handleCodeCopy(ev: Event) {
+    const target = ev.target as HTMLElement | null;
+    if (!target) {
+      return;
+    }
+
     try {
-      const target = ev.target as HTMLElement | null;
       const key = target?.dataset['key'];
       let copyText = '';
       switch (key) {
@@ -159,22 +163,30 @@ class App extends LitElement {
         case 'requestFunc':
           copyText = this.getRequestFuncStr();
           break;
+        case 'mockData':
+          copyText = this.interfaceCode.mockData ?? '';
+          break;
         default:
+          console.warn('未匹配到要复制内容的相应类型');
           break;
       }
 
       await navigator.clipboard.writeText(copyText);
-      alert('已复制到剪切板！');
+      target!.innerHTML = '已复制✓';
     } catch (error: any) {
-      alert(`复制失败：${error.message as string}`);
+      target!.innerHTML = '复制失败！';
+      console.error('复制失败', error);
     }
+
+    setTimeout(() => {
+      target!.innerHTML = '复制';
+    }, 1250);
   }
 
   // connectedCallback() {
   //   super.connectedCallback();
   //   console.log(`Yapi-Tools-Extension: Rendering completed!`);
   // }
-
 
   /**
    * 获取请求函数字符串
@@ -278,6 +290,29 @@ class App extends LitElement {
       : html``;
   }
 
+  private renderMockData() {
+    const { generateMockData } = this.setting;
+    const { mockData } = this.interfaceCode;
+
+    return generateMockData
+      ? html`
+          <div class="interface-item">
+            <div class="interface-item-head">
+              <span>Mock 数据</span>
+              <button @click="${this.handleCodeCopy}" data-key="mockData" class="interface-copy">
+                复制
+              </button>
+            </div>
+            <div class="interface-item-body">
+              <div class="interface-code" style="max-height: 35vh;">
+                <style-code languages="json" code="${mockData}"></style-code>
+              </div>
+            </div>
+          </div>
+        `
+      : html``;
+  }
+
   render() {
     return html`
       <div class="interface">
@@ -319,7 +354,7 @@ class App extends LitElement {
             </div>
           </div>
 
-          ${this.renderRequestFunc()}
+          ${this.renderRequestFunc()} ${this.renderMockData()}
         </div>
       </div>
     `;

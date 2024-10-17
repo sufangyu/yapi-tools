@@ -27,4 +27,12 @@ export interface Setting {
    * @memberof Setting
    */
   requestFuncTypes: boolean;
+
+  /**
+   * 是否生成 mock 数据
+   *
+   * @type {boolean}
+   * @memberof Setting
+   */
+  generateMockData: boolean;
 }
