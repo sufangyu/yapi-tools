@@ -34,17 +34,20 @@ class StyleCode extends LitElement {
       color: #ff80bf;
     }
     .token.builtin {
-      color: #ffffff;
+      color: #70c632ed;
+    }
+    .token.function {
+      color: #d98fdd;
     }
 
     .token.string {
-      color: #ffd580;
+      color: #70c632ed;
     }
     .token.number {
       color: #7970a9;
     }
     .token.boolean {
-      color: #f5ab35;
+      color: #a5d6ff;
     }
   `;
 

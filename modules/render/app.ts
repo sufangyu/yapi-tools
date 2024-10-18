@@ -85,7 +85,7 @@ class App extends LitElement {
       position: relative;
     }
     .interface-item {
-      border-radius: 4px;
+      border-radius: 6px;
       overflow: hidden;
       margin-bottom: 16px;
     }
@@ -94,7 +94,7 @@ class App extends LitElement {
       line-height: 36px;
       padding: 0 16px;
       font-size: 14px;
-      background-color: #32363a;
+      background-color: #2f343d;
       color: #999;
       border-bottom: 1px solid #333;
       display: flex;
@@ -105,13 +105,10 @@ class App extends LitElement {
       position: relative;
     }
     .interface-copy {
-      // position: absolute;
       background-color: rgba(255, 255, 255, 0.8);
-      padding: 5px 10px;
+      padding: 4px 8px;
       line-height: 1em;
       font-size: 12px;
-      // top: 10px;
-      // right: 30px;
       border: none;
       margin: 0;
       outline: none;
@@ -120,16 +117,16 @@ class App extends LitElement {
     }
     .interface-copy:hover {
       background-color: #ffffff;
-      box-shadow: 0 0 1px 0 #ffffff;
+      // box-shadow: 0 0 1px 0 #ffffff;
     }
     .interface-copy:active {
       box-shadow: none;
       background-color: rgba(255, 255, 255, 0.8);
     }
     .interface-code {
-      background-color: #2f2f2f;
+      background-color: #171717;
       padding: 16px;
-      max-height: 80vh;
+      max-height: 60vh;
       overflow-y: auto;
       overscroll-behavior: contain;
     }
