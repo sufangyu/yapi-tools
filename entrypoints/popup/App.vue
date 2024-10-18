@@ -126,50 +126,38 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 .setting-header {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 8px 16px;
-  background-color: #f5f7fa;
+  @apply flex justify-center items-center
+    py-2 px-4 bg-[#F9FAFB];
 
   h1 {
-    font-size: 16px;
-    font-weight: normal;
-    padding: 0;
-    margin: 0;
+    @apply text-base;
   }
 
   .logo {
-    display: block;
-    margin-right: 8px;
-    font-size: 0;
+    @apply block mr-2 text-[0];
 
     img {
-      height: 20px;
+      @apply h-5;
     }
   }
 }
 
 .setting-body {
-  padding: 16px;
-  font-size: 14px;
+  @apply text-sm p-4;
 
   .setting-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 12px;
+    @apply flex items-center mb-3;
 
-    :last-child {
-      margin-bottom: 0%;
+    &:last-child {
+      margin-bottom: 0;
     }
 
     .label {
-      margin-right: 8px;
-      color: #333;
+      @apply mr-2 text-[#666];
     }
 
     > div {
-      flex: 1;
+      @apply flex-1;
     }
   }
 }
