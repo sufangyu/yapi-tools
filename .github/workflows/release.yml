@@ -1,0 +1,57 @@
+name: 构建并发布到 Release
+
+on:
+  workflow_dispatch:
+
+  push:
+    tags: # 仅在 push tags 时触发
+      - 'v*' # 这里可以自定义 tag 的格式，如 'v*' 表示以 'v' 开头的 tag
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9 # 指定 pnpm 版本
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install
+
+      # 获取 package.json 里的 version
+      - name: Get version from package.json
+        id: get_version
+        run: echo "VERSION=$(jq -r .version package.json)" >> $GITHUB_ENV
+
+      - name: Zip extensions
+        run: |
+          pnpm zip
+          # pnpm zip:firefox
+
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: 'v${{ env.VERSION }}' # 使用 package.json 中的版本
+          release_name: '发布 v${{ env.VERSION }}' # 使用版本号命名 Release
+          draft: false
+          prerelease: false
+
+      - name: Upload Chrome Extension
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: .output/yapi-tools-${{ env.VERSION }}-chrome.zip
+          asset_name: yapi-tools-${{ env.VERSION }}-chrome.zip
+          asset_content_type: application/zip
