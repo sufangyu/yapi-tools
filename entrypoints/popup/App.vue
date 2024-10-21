@@ -124,7 +124,7 @@ onMounted(async () => {
 })
 </script>
 
-<style lang="scss" scoped>
+<style lang="postcss" scoped>
 .setting-header {
   @apply flex justify-center items-center
     py-2 px-4 bg-[#F9FAFB];
