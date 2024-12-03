@@ -2,7 +2,7 @@
   "name": "yapi-tools",
   "description": "YAPI 浏览器插件，在 YAPI 接口文档显示 TypeScript interface。",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "type": "module",
   "scripts": {
     "dev": "wxt",
@@ -15,6 +15,7 @@
     "postinstall": "wxt prepare"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
     "@mswjs/interceptors": "^0.35.8",
     "element-plus": "^2.8.4",
     "lit": "^3.2.0",
