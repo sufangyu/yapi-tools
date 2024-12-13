@@ -198,12 +198,12 @@ class App extends LitElement {
     const { interfacePrefix, requestFuncTypes } = this.setting;
     // console.log("interfaceCode", reqParams, reqQuery, reqBody);
 
-    const pathRes = (path ?? '').replace(/{/g, '${');
-    const funcName = interfacePrefix ? rootNameBase?.replace(/^i/i, '') : rootNameBase;
-    const funcNameRes = lowercaseFirstLetter(funcName ?? '');
-    const methodRes = method!.toLocaleLowerCase();
-    const reqInterfaceName = `${requestFuncTypes ? 'Types.' : ''}${rootNameBase}Req`;
-    const resInterfaceName = `${requestFuncTypes ? 'Types.' : ''}${rootNameBase}Res`;
+    const apiUrl = (path ?? '').replace(/{/g, '${');
+    let funcName = interfacePrefix ? rootNameBase?.replace(/^i/i, '') : rootNameBase;
+    funcName = lowercaseFirstLetter(funcName ?? '');
+    method = method!.toLocaleLowerCase();
+    const reqInterface = `${requestFuncTypes ? 'Types.' : ''}${rootNameBase}Req`;
+    const resInterface = `${requestFuncTypes ? 'Types.' : ''}${rootNameBase}Res`;
 
     // // TEST: 需要注释掉
     // reqParams = [
@@ -215,7 +215,7 @@ class App extends LitElement {
     let funcParamsQuery = '';
     let reqQueryStr = '';
     if ((reqQuery ?? []).length > 0) {
-      funcParamsQuery = `params: ${reqInterfaceName}`;
+      funcParamsQuery = `params: ${reqInterface}`;
       reqQueryStr = 'params';
     }
 
@@ -224,7 +224,7 @@ class App extends LitElement {
     let reqBodyStr = '';
 
     if (reqBody) {
-      funcParamsBody = `data: ${reqInterfaceName}`;
+      funcParamsBody = `data: ${reqInterface}`;
       reqBodyStr = 'data';
     }
 
@@ -236,23 +236,23 @@ class App extends LitElement {
     }
 
     // 函数注释中的参数列表
-    const reqFuncParamsCommentsArr = [
-      ...(reqParams ?? []).map((it) => `@params {string} ${it.name} ${it.desc || ''}`),
-      funcParamsQuery ? `@params {${reqInterfaceName}} ${reqQueryStr} ${title}参数` : '',
-      funcParamsBody ? `@params {${reqInterfaceName}} ${reqBodyStr} ${title}参数` : ''
-    ].filter(Boolean);
+    const reqFuncParamsComments = [
+      ...(reqParams ?? []).map((it) => ` * @params {string} ${it.name} ${it.desc || ''}`),
+      funcParamsQuery ? ` * @params {${reqInterface}} ${reqQueryStr} ${title}参数` : '',
+      funcParamsBody ? ` * @params {${reqInterface}} ${reqBodyStr} ${title}参数` : ''
+    ].filter(Boolean).join('\n');
 
     const requestFuncArr = [
       `/**`,
       ` * ${title}`,
       ` *`,
-      `${reqFuncParamsCommentsArr.map((it) => ` * ${it}`).join('\n')}`,
+      reqFuncParamsComments,
       ` * @see ${pageUrl}`,
       ` * @return {*}`,
       ` */`,
-      `export const ${funcNameRes}Api = (${reqFuncParamsArr.join(', ')}) => {`,
-      `  const url = \`${pathRes}\`;\n`,
-      `  return http.${methodRes}<${resInterfaceName}>({`,
+      `export const ${funcName}Api = (${reqFuncParamsArr.join(', ')}) => {`,
+      `  const url = \`${apiUrl}\`;\n`,
+      `  return http.${method}<${resInterface}>({`,
       `    url,`,
       `    ${reqQueryStr ? `${reqQueryStr},` : ''}`,
       `    ${reqBodyStr ? `${reqBodyStr},` : ''}`,
